@@ -1,0 +1,1 @@
+This folder is for storing all of our deliverable documents like the prototype, architectural diagram, and workflow diagram.
