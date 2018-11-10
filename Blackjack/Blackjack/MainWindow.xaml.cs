@@ -1,4 +1,5 @@
 ﻿using Blackjack.dto;
+using Blackjack.service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,22 @@ namespace Blackjack
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Deck deck { get; set; }
+        private GameService gameService { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            initializeDefaults();
+            this.gameService = new GameService();
         }
 
-        private void initializeDefaults()
+        private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            this.deck = new Deck();
+            Environment.Exit(0);
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            this.gameService.startGame();
         }
     }
 }

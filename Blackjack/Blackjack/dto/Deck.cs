@@ -10,10 +10,12 @@ namespace Blackjack.dto
     class Deck
     {
         public List<Card> cards { get; set; }
+        private int deckIndex { get; set; }
 
         public Deck()
         {
             this.initializeDeck();
+            this.deckIndex = -1;
         }
 
         private void initializeDeck()
@@ -27,6 +29,22 @@ namespace Blackjack.dto
                     this.cards.Add(new Card(value, suit));
                 }
             }
+        }
+
+        public Card getNextCard()
+        {
+            //if getting near the end of the deck go ahead and shuffle and start deck again to ensure you don't run out of cards
+            if (this.deckIndex >= 45)
+                this.shuffleDeck();
+
+            this.deckIndex++;
+            return this.cards[deckIndex];
+        }
+
+        public void shuffleDeck()
+        {
+            //shuffle deck
+            this.deckIndex = -1;
         }
     }
 }

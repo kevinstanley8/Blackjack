@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blackjack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Label x:Name="label" Content="BLACKJACK GAME GOES HERE" HorizontalAlignment="Left" Margin="76,119,0,0" VerticalAlignment="Top" FontSize="48"/>
+        Title="MainWindow" Height="565.503" Width="1019.28">
+    <Grid x:Name="gridBlackjack" Background="#FF6DDE63" Margin="0,0,2,0" Height="534" VerticalAlignment="Top">
+        <Label x:Name="label" Content="BLACKJACK" HorizontalAlignment="Left" Margin="376,81,0,0" VerticalAlignment="Top" FontSize="48"/>
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="395,231,0,0" VerticalAlignment="Top" Width="220" Height="71" FontSize="36" FontFamily="Arial Black" Click="btnStart_Click"/>
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="395,336,0,0" VerticalAlignment="Top" Width="220" Height="71" FontSize="36" FontFamily="Arial Black" Click="btnExit_Click"/>
 
     </Grid>
 </Window>
