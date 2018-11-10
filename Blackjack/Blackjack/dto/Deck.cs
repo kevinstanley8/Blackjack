@@ -1,6 +1,7 @@
 ﻿using Blackjack.dto.types;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,15 @@ namespace Blackjack.dto
     {
         public List<Card> cards { get; set; }
         private int deckIndex { get; set; }
+        private int shuffleAmount;
+        private Random rand;
 
         public Deck()
         {
             this.initializeDeck();
             this.deckIndex = -1;
+            shuffleAmount = 1000;
+            rand = new Random();
         }
 
         private void initializeDeck()
@@ -43,8 +48,25 @@ namespace Blackjack.dto
 
         public void shuffleDeck()
         {
-            //shuffle deck
+            // Internal variable declaration for deck length
+            int deckLength = cards.Count;
+
+            // Set deck index to -1 to signify start of the deck, since pulling next card increments deckIndex before pulling card
             this.deckIndex = -1;
+
+            // Perform shuffle code "shuffleAmount" times
+            for(int i=0; i<shuffleAmount; i++)
+            {
+                // Shuffle Code which swaps a card at curIndex with a randomly selected index after curIndex
+                for(int curIndex=0; curIndex < deckLength; curIndex++)
+                {
+                    int randIndex = curIndex + rand.Next(deckLength - curIndex);
+                    Card tempCard = cards[randIndex];
+                    cards[randIndex] = cards[curIndex];
+                    cards[curIndex] = tempCard;
+                }
+            }
+
         }
     }
 }

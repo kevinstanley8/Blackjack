@@ -29,11 +29,12 @@ namespace Blackjack.service
 
 
         /**
-         * startGame - Will start the blackjack game by dealing out the initial hands. 
+         * startGame - Will start the blackjack game by shuffling the deck and dealing out the initial hands. 
          */
         public void startGame(Grid table)
         {
             this.table = table;
+            deck.shuffleDeck();
             this.addCardToHand(PlayerType.PLAYER);
             this.addCardToHand(PlayerType.PLAYER);
             this.addCardToHand(PlayerType.DEALER);

@@ -115,6 +115,11 @@ namespace Blackjack.dto
             path = path + getStringValue() + getSuitValue() + ".png";
             this.cardImage = path;
         }
-        
+
+        public override string ToString()
+        {
+            return getStringValue() + getSuitValue();
+        }
+
     }
 }
