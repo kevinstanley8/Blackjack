@@ -10,6 +10,8 @@
         <Label x:Name="label" Content="BLACKJACK" HorizontalAlignment="Left" Margin="376,81,0,0" VerticalAlignment="Top" FontSize="48"/>
         <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="395,231,0,0" VerticalAlignment="Top" Width="220" Height="71" FontSize="36" FontFamily="Arial Black" Click="btnStart_Click"/>
         <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="395,336,0,0" VerticalAlignment="Top" Width="220" Height="71" FontSize="36" FontFamily="Arial Black" Click="btnExit_Click"/>
+        <Image x:Name="imgSpades" HorizontalAlignment="Left" Height="179" Margin="38,309,0,0" VerticalAlignment="Top" Width="295" Source="Images/honors_spade.png"/>
+        <Image x:Name="imgHearts" HorizontalAlignment="Left" Height="179" Margin="676,309,0,0" VerticalAlignment="Top" Width="295" Source="Images/honors_heart.png"/>
 
     </Grid>
 </Window>

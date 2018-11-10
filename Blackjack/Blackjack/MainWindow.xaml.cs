@@ -22,12 +22,10 @@ namespace Blackjack
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameService gameService { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            this.gameService = new GameService();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -37,7 +35,8 @@ namespace Blackjack
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            this.gameService.startGame();
+            Table table = new Table();
+            table.Show();
         }
     }
 }

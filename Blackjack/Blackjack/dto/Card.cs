@@ -59,6 +59,33 @@ namespace Blackjack.dto
         }
 
         /**
+         * getNumericValue - returns the String equivalent of the card value so we can get the card image
+         */
+        public String getStringValue()
+        {
+            if (this.value == Value.ACE || this.value == Value.KING || this.value == Value.QUEEN || this.value == Value.JACK)
+            {
+                switch (this.value)
+                {
+                    case Value.JACK:
+                        return "J";
+                    case Value.QUEEN:
+                        return "Q";
+                    case Value.KING:
+                        return "K";
+                    case Value.ACE:
+                        return "A";
+                    default:
+                        return "";
+                }
+            }
+            else
+            {
+                return this.getNumericValue().ToString();
+            }
+        }
+
+        /**
          * getSuitValue - returns the string equivalent of the card suit 
          */
         public String getSuitValue()
@@ -66,13 +93,13 @@ namespace Blackjack.dto
             switch(this.suit)
             {
                 case Suit.HEART:
-                    return "HEART";
+                    return "H";
                 case Suit.DIAMOND:
-                    return "DIAMOND";
+                    return "D";
                 case Suit.CLUB:
-                    return "CLUB";
+                    return "C";
                 case Suit.SPADE:
-                    return "SPADE";
+                    return "S";
                 default:
                     return "";
             }
@@ -83,10 +110,9 @@ namespace Blackjack.dto
          */
         private void setCardImage()
         {
-            //this is just a guess so we will need to confirm the card image path when we get the images loaded.
-            String path = "/Images/";
+            String path = "../Images/";
 
-            path = path + getNumericValue().ToString() + getSuitValue() + ".png";
+            path = path + getStringValue() + getSuitValue() + ".png";
             this.cardImage = path;
         }
         
