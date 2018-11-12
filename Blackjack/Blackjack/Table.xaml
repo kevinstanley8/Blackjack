@@ -5,13 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blackjack"
         mc:Ignorable="d"
-        Title="Table" Height="599.682" Width="1126.059">
-    <Grid Name ="gridTable" Background="#FF6DDE63">
-        <Button x:Name="btnHit" Content="Hit" HorizontalAlignment="Left" Margin="28,112,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnHit_Click"/>
+        Title="Table" Height="720" Width="1280" FontFamily="./fonts/#Cardo">
+    <Grid x:Name ="gridTable">
+        <Grid.Background>
+            <ImageBrush ImageSource="./Images/table_background.png"></ImageBrush>
+        </Grid.Background>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".7*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width=".7*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="gridInnerLeft">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="95"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="95"/>
+            </Grid.RowDefinitions>
+            
+            <Label x:Name="lblTitle" Grid.Column="0" Grid.Row="0" Content="BLACKJACK" FontSize="48" Margin="10 10" HorizontalAlignment="Left" />
+
+            <StackPanel x:Name="panelBtns" Grid.Row="1" VerticalAlignment="Center">
+                <Button x:Name="btnHit" Content="Test" Style="{DynamicResource RoundedButton}" FontSize="24" FontWeight="Bold" 
+                        Width="140" Height="50" Click="btnHit_Click"/>
+            </StackPanel>
+            
+
+        </Grid>
+        
+        
         <Button x:Name="btnStay" Content="Stay" HorizontalAlignment="Left" Margin="28,172,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnStay_Click"/>
         <Button x:Name="btnSplit" Content="Split" HorizontalAlignment="Left" Margin="28,232,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnSplit_Click"/>
         <Button x:Name="btnDoubleDown" Content="Double Down" HorizontalAlignment="Left" Margin="28,291,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnDoubleDown_Click"/>
-        <Label x:Name="lblTitle" Content="BLACKJACK" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="48"/>
+        
 
     </Grid>
 </Window>
