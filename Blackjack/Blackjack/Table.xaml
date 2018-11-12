@@ -8,14 +8,15 @@
         Title="Table" Height="720" Width="1280" FontFamily="./fonts/#Cardo">
     <Grid x:Name ="gridTable">
         <Grid.Background>
-            <ImageBrush ImageSource="./Images/table_background.png"></ImageBrush>
+            <ImageBrush ImageSource="Images/table_background.png"></ImageBrush>
         </Grid.Background>
         
-        <Grid.ColumnDefinitions>
+        <!--commenting out for Demo today.  This was blocking the card images from displaying.  After we show off the cards and being able to HIT we can put this back!-->
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width=".7*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width=".7*"/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
 
         <Grid x:Name="gridInnerLeft">
             <Grid.RowDefinitions>
@@ -26,15 +27,15 @@
             
             <Label x:Name="lblTitle" Grid.Column="0" Grid.Row="0" Content="BLACKJACK" FontSize="48" Margin="10 10" HorizontalAlignment="Left" />
 
-            <StackPanel x:Name="panelBtns" Grid.Row="1" VerticalAlignment="Center">
+            <!--<StackPanel x:Name="panelBtns" Grid.Row="1" VerticalAlignment="Center">
                 <Button x:Name="btnHit" Content="Test" Style="{DynamicResource RoundedButton}" FontSize="24" FontWeight="Bold" 
-                        Width="140" Height="50" Click="btnHit_Click"/>
-            </StackPanel>
+                        Width="140" Height="50" Click="btnHit_Click" Margin="116,0,115,0"/>
+            </StackPanel>-->
             
 
         </Grid>
-        
-        
+
+        <Button x:Name="btnHit" Content="Hit" HorizontalAlignment="Left" Margin="28,112,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnHit_Click"/>
         <Button x:Name="btnStay" Content="Stay" HorizontalAlignment="Left" Margin="28,172,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnStay_Click"/>
         <Button x:Name="btnSplit" Content="Split" HorizontalAlignment="Left" Margin="28,232,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnSplit_Click"/>
         <Button x:Name="btnDoubleDown" Content="Double Down" HorizontalAlignment="Left" Margin="28,291,0,0" VerticalAlignment="Top" Width="183" Height="44" FontSize="24" FontFamily="Arial Black" Click="btnDoubleDown_Click"/>
