@@ -11,6 +11,9 @@
 
                     <Border CornerRadius="8,8,8,8" Background="{TemplateBinding Background}" x:Name="border">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="2" Direction="270" />
+                        </Border.Effect>
                     </Border>
                     
 
