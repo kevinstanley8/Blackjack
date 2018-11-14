@@ -17,13 +17,13 @@ namespace Blackjack.dto
 
         public Deck()
         {
-            this.initializeDeck();
+            this.InitializeDeck();
             this.deckIndex = -1;
             shuffleAmount = 1000;
             rand = new Random();
         }
 
-        private void initializeDeck()
+        private void InitializeDeck()
         {
             this.cards = new List<Card>();
 
@@ -36,17 +36,17 @@ namespace Blackjack.dto
             }
         }
 
-        public Card getNextCard()
+        public Card GetNextCard()
         {
             //if getting near the end of the deck go ahead and shuffle and start deck again to ensure you don't run out of cards
             if (this.deckIndex >= 45)
-                this.shuffleDeck();
+                this.ShuffleDeck();
 
             this.deckIndex++;
             return this.cards[deckIndex];
         }
 
-        public void shuffleDeck()
+        public void ShuffleDeck()
         {
             // Internal variable declaration for deck length
             int deckLength = cards.Count;

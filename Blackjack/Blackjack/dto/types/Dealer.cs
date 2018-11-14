@@ -15,7 +15,7 @@ namespace Blackjack.dto.types
             this.hand = new List<Card>();
         }
 
-        public void clearHand()
+        public void ClearHand()
         {
             hand.Clear();
         }

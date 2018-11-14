@@ -2,6 +2,7 @@
 using Blackjack.dto.types;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,48 +26,48 @@ namespace Blackjack.service
             this.deck = new Deck();
             this.player = new Player();
             this.dealer = new Dealer();
-            deck.shuffleDeck();
+            deck.ShuffleDeck();
         }
 
 
         /**
          * startGame - Will start the blackjack game by shuffling the deck and dealing out the initial hands. 
          */
-        public void startGame(Grid table)
+        public void StartGame(Grid table)
         {
             this.table = table;
-            removeCardsfromScreen();
-            this.addCardToHand(PlayerType.PLAYER, true);
-            this.addCardToHand(PlayerType.PLAYER, true);
-            this.addCardToHand(PlayerType.DEALER, false);
-            this.addCardToHand(PlayerType.DEALER, true);
+            RemoveCardsfromScreen();
+            this.AddCardToHand(PlayerType.PLAYER, true);
+            this.AddCardToHand(PlayerType.PLAYER, true);
+            this.AddCardToHand(PlayerType.DEALER, false);
+            this.AddCardToHand(PlayerType.DEALER, true);
         }
 
         /**
          * addCardToHand - Adds a new card to hand of player or dealer
          */
-        public void addCardToHand(PlayerType playerType, Boolean isFaceUp)
+        public void AddCardToHand(PlayerType playerType, Boolean isFaceUp)
         {
-            Card nextCard = this.deck.getNextCard();
+            Card nextCard = this.deck.GetNextCard();
             nextCard.faceUp = isFaceUp;
-            nextCard.setCardImage();
+            nextCard.SetCardImage();
 
             if (playerType == PlayerType.PLAYER)
             {
                 this.player.hand.Add(nextCard);
             }
-            else if(playerType == PlayerType.DEALER)
+            else if (playerType == PlayerType.DEALER)
             {
                 this.dealer.hand.Add(nextCard);
             }
 
-            this.addCardToScreen(playerType, nextCard);
+            this.AddCardToScreen(playerType, nextCard);
         }
 
         /**
          * addCardToScreen - Adds new card image to screen
          */
-        public void addCardToScreen(PlayerType playerType, Card card)
+        public void AddCardToScreen(PlayerType playerType, Card card)
         {
             int imageMarginLeft = 0;
             Image newCard = new Image();
@@ -84,7 +85,7 @@ namespace Blackjack.service
                 imageMarginLeft = (40 * this.player.hand.Count());
                 Grid.SetRow(newCard, 1);
             }
-            else if(playerType == PlayerType.DEALER)
+            else if (playerType == PlayerType.DEALER)
             {
                 imageMarginLeft = (40 * this.dealer.hand.Count());
                 Grid.SetRow(newCard, 0);
@@ -95,11 +96,55 @@ namespace Blackjack.service
             table.Children.Add(newCard);
         }
 
-        public void removeCardsfromScreen()
+        // Clears Card Images from screen and clears player+dealer hands.
+        public void RemoveCardsfromScreen()
         {
-            player.clearHand();
-            dealer.clearHand();
+            player.ClearHand();
+            dealer.ClearHand();
             table.Children.Clear();
         }
+
+        // Flips all face-down cards in the dealer's hand to face-up.
+        public void RevealDealerHand()
+        {
+            foreach (Card card in dealer.hand)
+            {
+                card.faceUp = true;
+                card.SetCardImage();
+            }
+        }
+
+        // Calculates the hand value of the playertype parameter. Takes into account Aces = 1 or 11.
+        public int CalculateHandValue(PlayerType playerType)
+        {
+            int tempValue = 0;
+            int numAces = 0;
+            List<Card> hand;
+
+            if (playerType == PlayerType.DEALER)
+                hand = dealer.hand;
+            else if (playerType == PlayerType.PLAYER)
+                hand = player.hand;
+            else hand = null;
+            
+            foreach (Card card in hand)
+            {
+                tempValue += card.GetNumericValue();
+                if (card.value == Value.ACE)
+                    numAces++;
+            }
+            while (numAces > 0)
+            {
+                if (tempValue > 21)
+                {
+                    tempValue -= 10;
+                    numAces--;
+                }
+                else break;
+            }
+            return tempValue;
+        }
     }
+
+}
 }

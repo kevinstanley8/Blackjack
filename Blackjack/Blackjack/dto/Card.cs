@@ -19,13 +19,13 @@ namespace Blackjack.dto
             this.value = value;
             this.suit = suit;
             faceUp = true;
-            this.setCardImage();
+            this.SetCardImage();
         }
 
         /**
          * getNumericValue - returns the integer equivalent of the card value 
          */
-        public int getNumericValue()
+        public int GetNumericValue()
         {
             switch(this.value)
             {
@@ -63,7 +63,7 @@ namespace Blackjack.dto
         /**
          * getNumericValue - returns the String equivalent of the card value so we can get the card image
          */
-        public String getStringValue()
+        public String GetStringValue()
         {
             if (this.value == Value.ACE || this.value == Value.KING || this.value == Value.QUEEN || this.value == Value.JACK)
             {
@@ -83,14 +83,14 @@ namespace Blackjack.dto
             }
             else
             {
-                return this.getNumericValue().ToString();
+                return this.GetNumericValue().ToString();
             }
         }
 
         /**
          * getSuitValue - returns the string equivalent of the card suit 
          */
-        public String getSuitValue()
+        public String GetSuitValue()
         {
             switch(this.suit)
             {
@@ -110,11 +110,11 @@ namespace Blackjack.dto
         /**
          * setCardImage - sets the image path of the card 
          */
-        public void setCardImage()
+        public void SetCardImage()
         {
             String path = "../Images/";
             if (faceUp)
-                path = path + getStringValue() + getSuitValue() + ".png";
+                path = path + GetStringValue() + GetSuitValue() + ".png";
             else
                 path = path + "gray_back" + ".png";
             this.cardImage = path;
@@ -122,7 +122,7 @@ namespace Blackjack.dto
 
         public override string ToString()
         {
-            return getStringValue() + getSuitValue();
+            return GetStringValue() + GetSuitValue();
         }
 
     }
