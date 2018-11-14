@@ -26,7 +26,16 @@ namespace Blackjack
         {
             InitializeComponent();
             this.gameService = new GameService();
-            this.gameService.startGame(this.gridInnerCenter);
+            this.setPlayBtnsEnabled(false);
+        }
+
+        // Sets the Hit, Stay, Split, and Double Down buttons enabled/disabled based on the bool parameter
+        public void setPlayBtnsEnabled(Boolean enabledStatus)
+        {
+            btnHit.IsEnabled = enabledStatus;
+            btnStay.IsEnabled = enabledStatus;
+            btnSplit.IsEnabled = enabledStatus;
+            btnDoubleDown.IsEnabled = enabledStatus;
         }
 
         private void btnHit_Click(object sender, RoutedEventArgs e)
@@ -36,7 +45,10 @@ namespace Blackjack
 
         private void btnStay_Click(object sender, RoutedEventArgs e)
         {
-
+            // Temporary Logic
+            setPlayBtnsEnabled(false);
+            btnNewHand.IsEnabled = true;
+            gameService.removeCardsfromScreen();
         }
 
         private void btnSplit_Click(object sender, RoutedEventArgs e)
@@ -45,6 +57,24 @@ namespace Blackjack
         }
 
         private void btnDoubleDown_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnNewHand_Click(object sender, RoutedEventArgs e)
+        {
+            // Temporary Logic
+            setPlayBtnsEnabled(true);
+            btnNewHand.IsEnabled = false;
+            gameService.startGame(gridInnerCenter);
+        }
+
+        private void btnBetMinus_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnBetPlus_Click(object sender, RoutedEventArgs e)
         {
 
         }

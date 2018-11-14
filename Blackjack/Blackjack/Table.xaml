@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blackjack"
         mc:Ignorable="d"
-        Title="Table" Height="600" Width="1066" FontFamily="./fonts/#Cardo" WindowStartupLocation="CenterOwner">
+        Title="Table" Height="600" Width="1066" FontFamily="./fonts/#Cardo" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
     <Grid x:Name ="gridTable">
         <Grid.Background>
             <ImageBrush ImageSource="./Images/table_background.png"></ImageBrush>
         </Grid.Background>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".7*"/>
+            <ColumnDefinition Width=".55*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width=".7*"/>
+            <ColumnDefinition Width=".55*"/>
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="gridInnerLeft" Grid.Column="0">
@@ -24,7 +24,7 @@
                 <RowDefinition Height="95"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="lblTitle" Grid.Column="0" Grid.Row="0" Content="BLACKJACK" FontSize="44" Margin="10 10" HorizontalAlignment="Left" />
+            <Label x:Name="lblTitle" Grid.Column="0" Grid.Row="0" Content="BLACKJACK" FontSize="38" Margin="10 10" HorizontalAlignment="Left" />
 
             <StackPanel x:Name="panelBtns" Grid.Row="1" VerticalAlignment="Center">
                 <Button x:Name="btnHit" Content="Hit" Style="{StaticResource RoundedButton1}" FontSize="24" FontWeight="Bold" 
@@ -48,7 +48,53 @@
         </Grid>
 
         <Grid x:Name="gridInnerRight" Grid.Column="2">
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel x:Name="panelInfo" Grid.Row="0" Margin="0 10 10 0" HorizontalAlignment="Right">
+                <StackPanel x:Name="panelDescriptions" Width="207" Height="Auto" Background="#FFAFE9AA" Margin="0 0 0 12">
+                    <Label Content="Minimum Bet" Height="34" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <Label Content="$1" FontSize="24" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <Label Content="Maximum Bet" Height="34" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <Label Content="$50" FontSize="24" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <TextBlock Text="Dealer must stand on 17+" TextWrapping="Wrap" FontSize="24" 
+                               HorizontalAlignment="Center" TextAlignment="Center" />
+                    <TextBlock Text="Blackjack rewards 3-to-2" TextWrapping="Wrap" FontSize="24"
+                               HorizontalAlignment="Center" TextAlignment="Center" />
+                </StackPanel>
+                
+                <StackPanel x:Name="panelCurrentBet" Width="207" Height="Auto" Background="#FFAFE9AA" Margin="0 0 0 17">
+                    <Label Content="Current Bet" Height="34" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <Grid Width="207" Height="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".4*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width=".4*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnBetMinus" Content="-" Grid.Column="0" Width="30" Height="30"
+                                Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                                FontWeight="Bold" FontSize="24" Click="btnBetMinus_Click" />
+                        <Label x:Name="lblBetAmount" Content="$1" Grid.Column="1" HorizontalAlignment="Center"
+                               FontSize="24" FontWeight="Bold" Foreground="Red" />
+                        <Button x:Name="btnBetPlus" Content="+" Grid.Column="2" Width="30" Height="30"
+                                Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left"
+                                FontWeight="Bold" FontSize="24" Click="btnBetPlus_Click" />
+                    </Grid>
+                </StackPanel>
+                <Button x:Name="btnNewHand" Content="New Hand" Style="{StaticResource RoundedButton1}" 
+                    FontSize="20" FontWeight="Bold"
+                    Width="140" Height="50" Click="btnNewHand_Click" />
+            </StackPanel>
+
+            <Border Grid.Row="1" Background="#FFAFE9AA" BorderBrush="Red" BorderThickness="4"
+                    Margin="10 15 15 15" />
+            <Label Grid.Row="1" Content="BANK AMOUNT" Margin="20 20 0 0" FontSize="24" FontWeight="Bold" />
+            <Label x:Name="lblBankAmount" Grid.Row="1" Content="$50,000" Margin="25 0 25 15" 
+                   FontSize="28" FontWeight="Bold" Foreground="Red"
+                   HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
+
         </Grid>
         
     </Grid>

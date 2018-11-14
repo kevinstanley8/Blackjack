@@ -25,6 +25,7 @@ namespace Blackjack.service
             this.deck = new Deck();
             this.player = new Player();
             this.dealer = new Dealer();
+            deck.shuffleDeck();
         }
 
 
@@ -34,7 +35,7 @@ namespace Blackjack.service
         public void startGame(Grid table)
         {
             this.table = table;
-            deck.shuffleDeck();
+            removeCardsfromScreen();
             this.addCardToHand(PlayerType.PLAYER, true);
             this.addCardToHand(PlayerType.PLAYER, true);
             this.addCardToHand(PlayerType.DEALER, false);
@@ -92,6 +93,13 @@ namespace Blackjack.service
 
             // Add card image to table's Grid view.
             table.Children.Add(newCard);
+        }
+
+        public void removeCardsfromScreen()
+        {
+            player.clearHand();
+            dealer.clearHand();
+            table.Children.Clear();
         }
     }
 }
