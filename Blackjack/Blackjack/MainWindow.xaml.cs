@@ -35,8 +35,11 @@ namespace Blackjack
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            Table table = new Table();
-            table.Show();
+            Table table = new Table()
+            {
+                Owner = this
+            };
+            table.ShowDialog();
         }
     }
 }

@@ -12,11 +12,13 @@ namespace Blackjack.dto
         public Value value { get; set; }
         public Suit suit { get; set; }
         public String cardImage { get; set; }
+        public Boolean faceUp { get; set; }
 
         public Card(Value value, Suit suit)
         {
             this.value = value;
             this.suit = suit;
+            faceUp = true;
             this.setCardImage();
         }
 
@@ -108,11 +110,13 @@ namespace Blackjack.dto
         /**
          * setCardImage - sets the image path of the card 
          */
-        private void setCardImage()
+        public void setCardImage()
         {
             String path = "../Images/";
-
-            path = path + getStringValue() + getSuitValue() + ".png";
+            if (faceUp)
+                path = path + getStringValue() + getSuitValue() + ".png";
+            else
+                path = path + "gray_back" + ".png";
             this.cardImage = path;
         }
 

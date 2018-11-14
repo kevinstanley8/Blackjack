@@ -26,12 +26,12 @@ namespace Blackjack
         {
             InitializeComponent();
             this.gameService = new GameService();
-            this.gameService.startGame(this.gridTable);
+            this.gameService.startGame(this.gridInnerCenter);
         }
 
         private void btnHit_Click(object sender, RoutedEventArgs e)
         {
-            this.gameService.addCardToHand(GameService.PlayerType.PLAYER);
+            this.gameService.addCardToHand(GameService.PlayerType.PLAYER, true);
         }
 
         private void btnStay_Click(object sender, RoutedEventArgs e)

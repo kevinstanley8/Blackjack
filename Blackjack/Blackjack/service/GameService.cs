@@ -35,18 +35,20 @@ namespace Blackjack.service
         {
             this.table = table;
             deck.shuffleDeck();
-            this.addCardToHand(PlayerType.PLAYER);
-            this.addCardToHand(PlayerType.PLAYER);
-            this.addCardToHand(PlayerType.DEALER);
-            this.addCardToHand(PlayerType.DEALER);
+            this.addCardToHand(PlayerType.PLAYER, true);
+            this.addCardToHand(PlayerType.PLAYER, true);
+            this.addCardToHand(PlayerType.DEALER, false);
+            this.addCardToHand(PlayerType.DEALER, true);
         }
 
         /**
          * addCardToHand - Adds a new card to hand of player or dealer
          */
-        public void addCardToHand(PlayerType playerType)
+        public void addCardToHand(PlayerType playerType, Boolean isFaceUp)
         {
             Card nextCard = this.deck.getNextCard();
+            nextCard.faceUp = isFaceUp;
+            nextCard.setCardImage();
 
             if (playerType == PlayerType.PLAYER)
             {
@@ -65,31 +67,31 @@ namespace Blackjack.service
          */
         public void addCardToScreen(PlayerType playerType, Card card)
         {
-            int imageTop = 172;
-            int imageLeft = 500;
+            int imageMarginLeft = 0;
+            Image newCard = new Image();
+            ImageSource cardImage = new BitmapImage(new Uri(card.cardImage, UriKind.Relative));
+            newCard.Source = cardImage;
+            newCard.Width = 120;
+            newCard.Height = 183;
+            newCard.HorizontalAlignment = HorizontalAlignment.Center;
+            newCard.VerticalAlignment = VerticalAlignment.Center;
+
 
             //stagger cards so they can all be visible based on how many cards are already out there
-            if(playerType == PlayerType.PLAYER)
+            if (playerType == PlayerType.PLAYER)
             {
-                imageTop = 300;
-                imageLeft = imageLeft + (20 * this.player.hand.Count());
+                imageMarginLeft = (40 * this.player.hand.Count());
+                Grid.SetRow(newCard, 1);
             }
             else if(playerType == PlayerType.DEALER)
             {
-                imageTop = 100;
-                imageLeft = imageLeft + (20 * this.dealer.hand.Count());
+                imageMarginLeft = (40 * this.dealer.hand.Count());
+                Grid.SetRow(newCard, 0);
             }
+            newCard.Margin = new Thickness(imageMarginLeft, 0, 0, 0);
 
-            //add card to screen
-            Image newCard = new Image();
-            newCard.Width = 130;
-            newCard.Height = 130;
-            newCard.Margin = new Thickness(imageLeft, imageTop, 0, 0);
-            newCard.HorizontalAlignment = HorizontalAlignment.Left;
-            newCard.VerticalAlignment = VerticalAlignment.Top;
-            ImageSource cardImage = new BitmapImage(new Uri(card.cardImage, UriKind.Relative));
-            newCard.Source = cardImage;
-            this.table.Children.Add(newCard);
+            // Add card image to table's Grid view.
+            table.Children.Add(newCard);
         }
     }
 }

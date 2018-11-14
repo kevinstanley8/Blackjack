@@ -2,23 +2,69 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Blackjack">
 
-    <Style x:Key="RoundedButton" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="#5F2310" />
-        <Setter Property="Foreground" Value="White" />
+    <Color x:Key="BackgroundColor1" A="255" R="95" G="35" B="16" />
+    <Color x:Key="MouseOverBackgroundColor1" A="255" R="107" G="62" B="48" />
+    <Color x:Key="MouseClickBackgroundColor1" A="255" R="71" G="28" B="14" />
+    <Color x:Key="BackgroundColor2" A="255" R="175" G="233" B="170" />
+    <Color x:Key="MouseOverBackgroundColor2" A="255" R="205" G="241" B="202" />
+    <Color x:Key="MouseClickBackgroundColor2" A="255" R="108" G="164" B="103" />
+    <Color x:Key="DisabledBackgroundColor" A="255" R="199" G="178" B="171" />
+
+    <SolidColorBrush x:Key="BackgroundBrush1" Color="{StaticResource BackgroundColor1}" />
+    <SolidColorBrush x:Key="TextBrush1" Color="White" />
+    <SolidColorBrush x:Key="MouseOverBackgroundBrush1" Color="{StaticResource MouseOverBackgroundColor1}" />
+    <SolidColorBrush x:Key="MouseClickBackgroundBrush1" Color="{StaticResource MouseClickBackgroundColor1}" />
+
+    <SolidColorBrush x:Key="BackgroundBrush2" Color="{StaticResource BackgroundColor2}" />
+    <SolidColorBrush x:Key="TextBrush2" Color="Black" />
+    <SolidColorBrush x:Key="MouseOverBackgroundBrush2" Color="{StaticResource MouseOverBackgroundColor2}" />
+    <SolidColorBrush x:Key="MouseClickBackgroundBrush2" Color="{StaticResource MouseClickBackgroundColor2}" />
+
+    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="{StaticResource DisabledBackgroundColor}" />
+
+    <Style x:Key="RoundedButton1" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush1}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBrush1}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-
-                    <Border CornerRadius="8,8,8,8" Background="{TemplateBinding Background}" x:Name="border">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="0" ShadowDepth="2" Direction="270" />
-                        </Border.Effect>
-                    </Border>
                     
+                    <Border x:Name="Border" CornerRadius="8,8,8,8" Background="{TemplateBinding Background}" >
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="2" Direction="270" Color="Black" Opacity="0.18" />
+                        </Border.Effect>
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
 
                     <ControlTemplate.Triggers>
-                        
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseOverBackgroundBrush1}" />
+                            </MultiTrigger.Setters>
+                            
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseClickBackgroundBrush1}" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+                            </Trigger.Setters>
+                        </Trigger>
                         
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -26,6 +72,54 @@
             
         </Setter>
         
+    </Style>
+
+    <Style x:Key="RoundedButton2" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush2}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBrush2}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border x:Name="Border" CornerRadius="15,15,15,15" Background="{TemplateBinding Background}" >
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="2" Direction="270" Color="Black" Opacity="0.18" />
+                        </Border.Effect>
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+
+
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseOverBackgroundBrush2}" />
+                            </MultiTrigger.Setters>
+                            
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseClickBackgroundBrush2}" />
+                            </MultiTrigger.Setters>
+
+                        </MultiTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+
+        </Setter>
+
     </Style>
     
 </ResourceDictionary>

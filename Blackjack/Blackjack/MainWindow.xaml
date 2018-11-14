@@ -5,13 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blackjack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="565.503" Width="1019.28">
-    <Grid x:Name="gridBlackjack" Background="#FF6DDE63" Margin="0,0,2,0" Height="534" VerticalAlignment="Top">
-        <Label x:Name="label" Content="BLACKJACK" HorizontalAlignment="Left" Margin="376,81,0,0" VerticalAlignment="Top" FontSize="48"/>
-        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="395,231,0,0" VerticalAlignment="Top" Width="220" Height="71" FontSize="36" FontFamily="Arial Black" Click="btnStart_Click"/>
-        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="395,336,0,0" VerticalAlignment="Top" Width="220" Height="71" FontSize="36" FontFamily="Arial Black" Click="btnExit_Click"/>
-        <Image x:Name="imgSpades" HorizontalAlignment="Left" Height="179" Margin="38,309,0,0" VerticalAlignment="Top" Width="295" Source="Images/honors_spade.png"/>
-        <Image x:Name="imgHearts" HorizontalAlignment="Left" Height="179" Margin="676,309,0,0" VerticalAlignment="Top" Width="295" Source="Images/honors_heart.png"/>
+        Title="MainWindow" Height="600" Width="1066" FontFamily="./fonts/#Cardo" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="gridBlackjack" Background="#62BE5A">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".6*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <Border x:Name="borderTitle"  Width="650" Height="140" Background="#4CC4C4C4" CornerRadius="70" />
+
+        <Label x:Name="lblTitle" Content="BLACKJACK" Grid.Row="0"
+               VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="96"/>
+
+        <Grid x:Name="gridInnerBottom" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel x:Name="panelBtns" Grid.Column="1" VerticalAlignment="Center" Margin="10 0">
+                <Button x:Name="btnStart" Content="START" Width="320" Height="72" FontSize="36"
+                    Style="{StaticResource RoundedButton2}" Click="btnStart_Click"/>
+
+                <Button x:Name="btnExit" Content="EXIT" Width="320" Height="72" FontSize="36"
+                    Style="{StaticResource RoundedButton2}" Click="btnExit_Click" Margin="0 28 0 0"/>
+            </StackPanel>
+            
+            <Image x:Name="imgSpades" Source="Images/honors_spade.png" Grid.Column="0" />
+            <Image x:Name="imgHearts" Source="Images/honors_heart.png" Grid.Column="2" />
+        </Grid>
     </Grid>
 </Window>
