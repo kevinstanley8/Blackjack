@@ -41,14 +41,20 @@ namespace Blackjack
         private void btnHit_Click(object sender, RoutedEventArgs e)
         {
             this.gameService.AddCardToHand(GameService.PlayerType.PLAYER, true);
+            if (gameService.CheckBust(GameService.PlayerType.PLAYER))
+                DisplayLoseDialog();
         }
 
         private void btnStay_Click(object sender, RoutedEventArgs e)
         {
             // Temporary Logic
             SetPlayBtnsEnabled(false);
-            btnNewHand.IsEnabled = true;
-            gameService.RemoveCardsfromScreen();
+            gameService.playerTurn = false;
+            gameService.BeginDealerDraw();
+            if (gameService.CheckBust(GameService.PlayerType.DEALER) || gameService.CheckWin())
+                DisplayWinDialog();
+            else
+                DisplayLoseDialog();
         }
 
         private void btnSplit_Click(object sender, RoutedEventArgs e)
@@ -77,6 +83,20 @@ namespace Blackjack
         private void btnBetPlus_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void DisplayLoseDialog()
+        {
+            MessageBox.Show("You Lose!");
+            gameService.RemoveCardsfromScreen();
+            btnNewHand.IsEnabled = true;
+        }
+
+        public void DisplayWinDialog()
+        {
+            MessageBox.Show("You Win!");
+            gameService.RemoveCardsfromScreen();
+            btnNewHand.IsEnabled = true;
         }
     }
 }

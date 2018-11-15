@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Blackjack.dto
 {
@@ -11,14 +15,22 @@ namespace Blackjack.dto
     {
         public Value value { get; set; }
         public Suit suit { get; set; }
-        public String cardImage { get; set; }
         public Boolean faceUp { get; set; }
+        public Image cardImage { get; set; }
 
         public Card(Value value, Suit suit)
         {
             this.value = value;
             this.suit = suit;
             faceUp = true;
+            cardImage = new Image()
+            {
+                Width = 120,
+                Height = 183,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0)
+            };
             this.SetCardImage();
         }
 
@@ -117,7 +129,8 @@ namespace Blackjack.dto
                 path = path + GetStringValue() + GetSuitValue() + ".png";
             else
                 path = path + "gray_back" + ".png";
-            this.cardImage = path;
+            ImageSource imgSource = new BitmapImage(new Uri(path, UriKind.Relative));
+            cardImage.Source = imgSource;
         }
 
         public override string ToString()

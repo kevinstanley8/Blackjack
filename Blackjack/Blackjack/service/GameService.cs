@@ -2,9 +2,11 @@
 using Blackjack.dto.types;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,17 +17,19 @@ namespace Blackjack.service
 {
     class GameService
     {
-        private Deck deck { get; set; }
+        public Deck deck { get; set; }
         public enum PlayerType { PLAYER, DEALER };
-        private Player player { get; set; }
-        private Dealer dealer { get; set; }
-        private Grid table { get; set; }
+        public Player player { get; set; }
+        public Dealer dealer { get; set; }
+        public Grid table { get; set; }
+        public Boolean playerTurn { get; set; }
 
         public GameService()
         {
             this.deck = new Deck();
             this.player = new Player();
             this.dealer = new Dealer();
+            playerTurn = false;
             deck.ShuffleDeck();
         }
 
@@ -41,6 +45,7 @@ namespace Blackjack.service
             this.AddCardToHand(PlayerType.PLAYER, true);
             this.AddCardToHand(PlayerType.DEALER, false);
             this.AddCardToHand(PlayerType.DEALER, true);
+            playerTurn = true;
         }
 
         /**
@@ -70,30 +75,22 @@ namespace Blackjack.service
         public void AddCardToScreen(PlayerType playerType, Card card)
         {
             int imageMarginLeft = 0;
-            Image newCard = new Image();
-            ImageSource cardImage = new BitmapImage(new Uri(card.cardImage, UriKind.Relative));
-            newCard.Source = cardImage;
-            newCard.Width = 120;
-            newCard.Height = 183;
-            newCard.HorizontalAlignment = HorizontalAlignment.Center;
-            newCard.VerticalAlignment = VerticalAlignment.Center;
-
-
+            
             //stagger cards so they can all be visible based on how many cards are already out there
             if (playerType == PlayerType.PLAYER)
             {
                 imageMarginLeft = (40 * this.player.hand.Count());
-                Grid.SetRow(newCard, 1);
+                Grid.SetRow(card.cardImage, 1);
             }
             else if (playerType == PlayerType.DEALER)
             {
                 imageMarginLeft = (40 * this.dealer.hand.Count());
-                Grid.SetRow(newCard, 0);
+                Grid.SetRow(card.cardImage, 0);
             }
-            newCard.Margin = new Thickness(imageMarginLeft, 0, 0, 0);
+            card.cardImage.Margin = new Thickness(imageMarginLeft, 0, 0, 0);
 
             // Add card image to table's Grid view.
-            table.Children.Add(newCard);
+            table.Children.Add(card.cardImage);
         }
 
         // Clears Card Images from screen and clears player+dealer hands.
@@ -144,7 +141,25 @@ namespace Blackjack.service
             }
             return tempValue;
         }
+
+        public Boolean CheckWin()
+        {
+            return CalculateHandValue(PlayerType.PLAYER) > CalculateHandValue(PlayerType.DEALER);
+        }
+
+        public Boolean CheckBust(PlayerType playerType)
+        {
+            return CalculateHandValue(playerType) > 21;
+        }
+
+        public void BeginDealerDraw()
+        {
+            RevealDealerHand();
+            while (CalculateHandValue(PlayerType.DEALER) < 17)
+            {
+                AddCardToHand(PlayerType.DEALER, true);
+            }
+        }
     }
 
-}
 }
