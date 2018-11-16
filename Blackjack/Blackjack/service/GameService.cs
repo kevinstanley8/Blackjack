@@ -22,14 +22,12 @@ namespace Blackjack.service
         public Player player { get; set; }
         public Dealer dealer { get; set; }
         public Grid table { get; set; }
-        public Boolean playerTurn { get; set; }
 
         public GameService()
         {
             this.deck = new Deck();
             this.player = new Player();
             this.dealer = new Dealer();
-            playerTurn = false;
             deck.ShuffleDeck();
         }
 
@@ -45,7 +43,6 @@ namespace Blackjack.service
             this.AddCardToHand(PlayerType.PLAYER, true);
             this.AddCardToHand(PlayerType.DEALER, false);
             this.AddCardToHand(PlayerType.DEALER, true);
-            playerTurn = true;
         }
 
         /**
@@ -140,6 +137,11 @@ namespace Blackjack.service
                 else break;
             }
             return tempValue;
+        }
+
+        public Boolean CheckDraw()
+        {
+            return CalculateHandValue(PlayerType.PLAYER) == CalculateHandValue(PlayerType.DEALER);
         }
 
         public Boolean CheckWin()

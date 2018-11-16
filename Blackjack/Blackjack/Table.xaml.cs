@@ -1,6 +1,7 @@
 ﻿using Blackjack.service;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,13 @@ namespace Blackjack
     public partial class Table : Window
     {
         private GameService gameService { get; set; }
+        private Double currentBet { get; set; }
 
         public Table()
         {
             InitializeComponent();
+            currentBet = 1;
+            UpdateBetText();
             this.gameService = new GameService();
             this.SetPlayBtnsEnabled(false);
         }
@@ -38,6 +42,11 @@ namespace Blackjack
             btnDoubleDown.IsEnabled = enabledStatus;
         }
 
+        public void UpdateBetText()
+        {
+            lblBetAmount.Content = String.Format("${0:n0}", currentBet);
+        }
+
         private void btnHit_Click(object sender, RoutedEventArgs e)
         {
             this.gameService.AddCardToHand(GameService.PlayerType.PLAYER, true);
@@ -49,9 +58,10 @@ namespace Blackjack
         {
             // Temporary Logic
             SetPlayBtnsEnabled(false);
-            gameService.playerTurn = false;
             gameService.BeginDealerDraw();
-            if (gameService.CheckBust(GameService.PlayerType.DEALER) || gameService.CheckWin())
+            if (gameService.CheckDraw())
+                DisplayDrawDialog();
+            else if (gameService.CheckBust(GameService.PlayerType.DEALER) || gameService.CheckWin())
                 DisplayWinDialog();
             else
                 DisplayLoseDialog();
@@ -77,12 +87,18 @@ namespace Blackjack
 
         private void btnBetMinus_Click(object sender, RoutedEventArgs e)
         {
-
+            currentBet = (Double)Decimal.Parse((string)lblBetAmount.Content, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
+            if (currentBet <= 1) return;
+            else currentBet -= 1;
+            lblBetAmount.Content = String.Format("${0:n0}", currentBet);
         }
 
         private void btnBetPlus_Click(object sender, RoutedEventArgs e)
         {
-
+            currentBet = (Double)Decimal.Parse((string)lblBetAmount.Content, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
+            if (currentBet >= 50) return;
+            else currentBet += 1;
+            lblBetAmount.Content = String.Format("${0:n0}", currentBet);
         }
 
         public void DisplayLoseDialog()
@@ -94,6 +110,12 @@ namespace Blackjack
         public void DisplayWinDialog()
         {
             MessageBox.Show("You Win!");
+            btnNewHand.IsEnabled = true;
+        }
+
+        public void DisplayDrawDialog()
+        {
+            MessageBox.Show("Draw!");
             btnNewHand.IsEnabled = true;
         }
     }
