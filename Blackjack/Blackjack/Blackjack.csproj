@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="dto\types\Bank.cs" />
     <Compile Include="dto\types\Dealer.cs" />
     <Compile Include="dto\types\Player.cs" />
     <Compile Include="service\GameService.cs" />
