@@ -88,14 +88,12 @@ namespace Blackjack
         public void DisplayLoseDialog()
         {
             MessageBox.Show("You Lose!");
-            gameService.RemoveCardsfromScreen();
             btnNewHand.IsEnabled = true;
         }
 
         public void DisplayWinDialog()
         {
             MessageBox.Show("You Win!");
-            gameService.RemoveCardsfromScreen();
             btnNewHand.IsEnabled = true;
         }
     }

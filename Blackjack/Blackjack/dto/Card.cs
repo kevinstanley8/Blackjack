@@ -66,7 +66,7 @@ namespace Blackjack.dto
                 case Value.KING:
                     return 10;
                 case Value.ACE:
-                    return 1;
+                    return 11;
                 default:
                     return 0;
             }
