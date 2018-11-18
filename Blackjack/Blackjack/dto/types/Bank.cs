@@ -8,11 +8,16 @@ namespace Blackjack.dto.types
 {
     class Bank
     {
-        private double amount { get; set; }
+        public double amount { get; set; }
 
         public Bank(double amount)
         {
             this.amount = amount;
+        }
+
+        public Double getBankAmount()
+        {
+            return this.amount;
         }
 
         public void add(double amt)

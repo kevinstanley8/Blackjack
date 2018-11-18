@@ -12,6 +12,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Blackjack.service
 {
@@ -22,15 +24,16 @@ namespace Blackjack.service
         public Player player { get; set; }
         public Dealer dealer { get; set; }
         public Grid table { get; set; }
+        public Bank bank { get; set; }
 
         public GameService()
         {
             this.deck = new Deck();
             this.player = new Player();
             this.dealer = new Dealer();
+            this.InitalizeBank();
             deck.ShuffleDeck();
         }
-
 
         /**
          * startGame - Will start the blackjack game by shuffling the deck and dealing out the initial hands. 
@@ -160,6 +163,71 @@ namespace Blackjack.service
             while (CalculateHandValue(PlayerType.DEALER) < 17)
             {
                 AddCardToHand(PlayerType.DEALER, true);
+            }
+        }
+
+        public void ProcessHandResult(HandResult handResult, double betAmount)
+        {
+            switch(handResult)
+            {
+                case HandResult.WIN:
+                    this.bank.add(betAmount);
+                    break;
+                case HandResult.LOSE:
+                    this.bank.subtract(betAmount);
+                    break;
+                case HandResult.DRAW:
+                    //do nothing on DRAW.  Player gets money back so no addition or subtraction needed
+                    break;
+                case HandResult.BLACKJACK:
+                    //if player gets Blackjack they get 3:2 payout
+                    this.bank.add(betAmount * 1.5);
+                    break;
+            }
+
+            WriteBankToJsonFile();
+        }
+
+
+        /**
+         * WriteBankToJsonFile - Using Newtonsoft.Json package to serialize Bank obj to JSON txt file and write the file to hard drive.
+         */
+        public void WriteBankToJsonFile()
+        {
+            try
+            {
+                String projectDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+                //using Newtonsoft.Json package to manage JSON
+                using (StreamWriter file = File.CreateText(projectDir + "/bank.txt"))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, this.bank);
+                }
+            } catch(Exception e)
+            {
+
+            }
+        }
+
+        /**
+         * InitalizeBank - Initalize Bank either from a preexisting JSON txt file or setup default bank if JSON file doesn't exist. 
+         */
+        public void InitalizeBank()
+        {
+            try
+            {
+                String projectDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+                using (StreamReader file = File.OpenText(projectDir + "/bank.txt"))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    this.bank = (Bank)serializer.Deserialize(file, typeof(Bank));
+                }
+            } catch(Exception e)
+            {
+                //no bank exists yet
+                this.bank = new Bank(100.00);
             }
         }
     }
