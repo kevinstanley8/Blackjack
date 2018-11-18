@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Do not need to commit our bank JSON file.  This should be regenerated for every person who downloads it.
+Blackjack/Blackjack/bank.txt
