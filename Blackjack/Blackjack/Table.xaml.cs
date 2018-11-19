@@ -25,6 +25,8 @@ namespace Blackjack
         private GameService gameService { get; set; }
         private Double currentBet { get; set; }
         private Boolean audioEnabled { get; set; }
+        private Boolean isSplit { get; set; }
+        private int currentHand { get; set; }
 
         public Table()
         {
@@ -32,6 +34,8 @@ namespace Blackjack
             currentBet = 1;
             UpdateBetText();
             this.audioEnabled = true;
+            this.isSplit = false;
+            this.currentHand = 0;
             this.gameService = new GameService();
             this.SetPlayBtnsEnabled(false);
             this.RefreshBankAmountOnScreen();
@@ -65,29 +69,57 @@ namespace Blackjack
          */
         private void PlayerStay()
         {
-            SetPlayBtnsEnabled(false);
-            gameService.BeginDealerDraw();
-            if (gameService.CheckDraw())
-                DisplayDrawDialog();
-            else if (gameService.CheckBust(GameService.PlayerType.DEALER) || gameService.CheckWin())
+            if (this.isSplit && this.currentHand == 0)
+                this.currentHand++;
+            else if(this.isSplit)
             {
-                this.gameService.ProcessHandResult(HandResult.WIN, this.currentBet);
-                this.RefreshBankAmountOnScreen();
-                DisplayWinDialog();
+                //this is a split hand and player has lost of stay on last hand
+                SetPlayBtnsEnabled(false);
+                gameService.BeginDealerDraw();
+
+                //check 1st hand
+                this.stayHand(0);
+
+                //check second hand
+                this.stayHand(1);
             }
             else
             {
-                this.gameService.ProcessHandResult(HandResult.LOSE, this.currentBet);
-                this.RefreshBankAmountOnScreen();
-                DisplayLoseDialog();
+                SetPlayBtnsEnabled(false);
+                gameService.BeginDealerDraw();
+                this.stayHand(0);
             }
+        }
+
+        private void stayHand(int handIndex)
+        {
+            if (gameService.CheckDraw(this.currentHand))
+                DisplayDrawDialog();
+            else if (gameService.CheckBust(GameService.PlayerType.DEALER, handIndex) || gameService.CheckWin(handIndex))
+                this.winHand(HandResult.WIN);
+            else
+                this.loseHand();
+        }
+
+        private void winHand(HandResult handResult)
+        {
+            this.gameService.ProcessHandResult(handResult, this.currentBet);
+            this.RefreshBankAmountOnScreen();
+            DisplayWinDialog();
+        }
+
+        private void loseHand()
+        {
+            this.gameService.ProcessHandResult(HandResult.LOSE, this.currentBet);
+            this.RefreshBankAmountOnScreen();
+            DisplayLoseDialog();
         }
 
         private void PlayerHit()
         {
-            this.gameService.AddCardToHand(GameService.PlayerType.PLAYER, true);
-            if (gameService.CheckBust(GameService.PlayerType.PLAYER))
-                DisplayLoseDialog();
+            this.gameService.AddCardToHand(GameService.PlayerType.PLAYER, true, this.isSplit, this.currentHand);
+            if (gameService.CheckBust(GameService.PlayerType.PLAYER, this.currentHand))
+                this.loseHand();
         }
 
         private void PlayerDoubleDown()
@@ -114,7 +146,8 @@ namespace Blackjack
 
         private void btnSplit_Click(object sender, RoutedEventArgs e)
         {
-            
+            this.isSplit = true;
+            this.gameService.SplitHand();
         }
 
         private void btnDoubleDown_Click(object sender, RoutedEventArgs e)
@@ -130,7 +163,32 @@ namespace Blackjack
             SetPlayBtnsEnabled(true);
             this.SetBetBtnsEnabled(false);
             btnNewHand.IsEnabled = false;
+            this.isSplit = false;
+            this.currentHand = 0;
             gameService.StartGame(gridInnerCenter);
+            this.CheckBlackjack();
+        }
+
+        /**
+         * CheckBlackjack - Check to see if player has Blackjack.  If both dealer and player have Blackjack then it is a draw.
+         */
+        private void CheckBlackjack()
+        {
+            if (gameService.CheckBlackjack(GameService.PlayerType.PLAYER, this.currentHand) && gameService.CheckBlackjack(GameService.PlayerType.DEALER, this.currentHand))
+            {
+                this.gameService.RevealDealerHand();
+                this.DisplayDrawDialog();
+            }
+            else if (gameService.CheckBlackjack(GameService.PlayerType.PLAYER, this.currentHand))
+            {
+                this.gameService.RevealDealerHand();
+                this.winHand(HandResult.BLACKJACK);
+            }
+            else if (gameService.CheckBlackjack(GameService.PlayerType.DEALER, this.currentHand))
+            {
+                this.gameService.RevealDealerHand();
+                this.loseHand();
+            }
         }
 
         private void btnBetMinus_Click(object sender, RoutedEventArgs e)
@@ -161,23 +219,41 @@ namespace Blackjack
         {
             this.PlayLoseAudio();
             MessageBox.Show("You Lose!");
-            btnNewHand.IsEnabled = true;
-            this.SetBetBtnsEnabled(true);
+
+            if (!this.isSplit || this.currentHand >= 1)
+            {
+                btnNewHand.IsEnabled = true;
+                this.SetBetBtnsEnabled(true);
+            }
+            else if (this.currentHand == 0)
+                this.currentHand++;
         }
 
         public void DisplayWinDialog()
         {
             this.PlayWinAudio();
             MessageBox.Show("You Win!");
-            btnNewHand.IsEnabled = true;
-            this.SetBetBtnsEnabled(true);
+
+            if (!this.isSplit || this.currentHand >= 1)
+            {
+                btnNewHand.IsEnabled = true;
+                this.SetBetBtnsEnabled(true);
+            }
+            else
+                this.currentHand++;
         }
 
         public void DisplayDrawDialog()
         {
             MessageBox.Show("Draw!");
-            btnNewHand.IsEnabled = true;
-            this.SetBetBtnsEnabled(true);
+
+            if (!this.isSplit || this.currentHand >= 1)
+            {
+                btnNewHand.IsEnabled = true;
+                this.SetBetBtnsEnabled(true);
+            }
+            else
+                this.currentHand++;
         }
 
         public void RefreshBankAmountOnScreen()

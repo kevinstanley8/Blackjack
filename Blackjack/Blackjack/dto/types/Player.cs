@@ -8,16 +8,26 @@ namespace Blackjack.dto.types
 {
     class Player
     {
-        public List<Card> hand { get; set; }
+        public List<List<Card>> hand { get; set; }
 
         public Player()
         {
-            this.hand = new List<Card>();
+            this.hand = new List<List<Card>>();
+            this.hand.Add(new List<Card>());
         }
 
         public void ClearHand()
         {
-            hand.Clear();
+            this.hand.Clear();
+            this.hand.Add(new List<Card>());
+        }
+
+        public void splitHand()
+        {
+            List<Card> newHand = new List<Card>();
+            newHand.Add(this.hand[0][1]);
+            this.hand[0].RemoveAt(1);
+            this.hand.Add(newHand);
         }
 
     }

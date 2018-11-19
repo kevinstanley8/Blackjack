@@ -42,16 +42,17 @@ namespace Blackjack.service
         {
             this.table = table;
             RemoveCardsfromScreen();
-            this.AddCardToHand(PlayerType.PLAYER, true);
-            this.AddCardToHand(PlayerType.PLAYER, true);
-            this.AddCardToHand(PlayerType.DEALER, false);
-            this.AddCardToHand(PlayerType.DEALER, true);
+
+            this.AddCardToHand(PlayerType.PLAYER, true, false, 0);
+            this.AddCardToHand(PlayerType.PLAYER, true, false, 0);
+            this.AddCardToHand(PlayerType.DEALER, false, false, 0);
+            this.AddCardToHand(PlayerType.DEALER, true, false, 0);
         }
 
         /**
          * addCardToHand - Adds a new card to hand of player or dealer
          */
-        public void AddCardToHand(PlayerType playerType, Boolean isFaceUp)
+        public void AddCardToHand(PlayerType playerType, Boolean isFaceUp, Boolean isSplit, int handIndex)
         {
             Card nextCard = this.deck.GetNextCard();
             nextCard.faceUp = isFaceUp;
@@ -59,27 +60,36 @@ namespace Blackjack.service
 
             if (playerType == PlayerType.PLAYER)
             {
-                this.player.hand.Add(nextCard);
+                this.player.hand[handIndex].Add(nextCard);
             }
             else if (playerType == PlayerType.DEALER)
             {
                 this.dealer.hand.Add(nextCard);
             }
 
-            this.AddCardToScreen(playerType, nextCard);
+            this.AddCardToScreen(playerType, nextCard, isSplit, handIndex);
         }
 
         /**
          * addCardToScreen - Adds new card image to screen
          */
-        public void AddCardToScreen(PlayerType playerType, Card card)
+        public void AddCardToScreen(PlayerType playerType, Card card, Boolean isSplit, int handIndex)
         {
             int imageMarginLeft = 0;
+            int splitOffset = 0;
+
+            if (isSplit)
+            {
+                if (handIndex == 0)
+                    splitOffset = -240;
+                else
+                    splitOffset = 160;
+            }
             
             //stagger cards so they can all be visible based on how many cards are already out there
             if (playerType == PlayerType.PLAYER)
             {
-                imageMarginLeft = (40 * this.player.hand.Count());
+                imageMarginLeft = ( (40 * this.player.hand[handIndex].Count()) + splitOffset);
                 Grid.SetRow(card.cardImage, 1);
             }
             else if (playerType == PlayerType.DEALER)
@@ -91,6 +101,18 @@ namespace Blackjack.service
 
             // Add card image to table's Grid view.
             table.Children.Add(card.cardImage);
+        }
+
+        public void SplitHand()
+        {
+            //move cards to seperate hands on table
+            Image playerCard1 = (Image)table.Children[0];
+            playerCard1.Margin = new Thickness(-200, 0, 0, 0);
+            Image playerCard2 = (Image)table.Children[1];
+            playerCard2.Margin = new Thickness(200, 0, 0, 0);
+
+            //create new hand for split
+            this.player.splitHand();
         }
 
         // Clears Card Images from screen and clears player+dealer hands.
@@ -112,7 +134,7 @@ namespace Blackjack.service
         }
 
         // Calculates the hand value of the playertype parameter. Takes into account Aces = 1 or 11.
-        public int CalculateHandValue(PlayerType playerType)
+        public int CalculateHandValue(PlayerType playerType, int handIndex)
         {
             int tempValue = 0;
             int numAces = 0;
@@ -121,7 +143,7 @@ namespace Blackjack.service
             if (playerType == PlayerType.DEALER)
                 hand = dealer.hand;
             else if (playerType == PlayerType.PLAYER)
-                hand = player.hand;
+                hand = player.hand[handIndex];
             else hand = null;
             
             foreach (Card card in hand)
@@ -142,27 +164,32 @@ namespace Blackjack.service
             return tempValue;
         }
 
-        public Boolean CheckDraw()
+        public Boolean CheckDraw(int handIndex)
         {
-            return CalculateHandValue(PlayerType.PLAYER) == CalculateHandValue(PlayerType.DEALER);
+            return CalculateHandValue(PlayerType.PLAYER, handIndex) == CalculateHandValue(PlayerType.DEALER, 0);
         }
 
-        public Boolean CheckWin()
+        public Boolean CheckWin(int handIndex)
         {
-            return CalculateHandValue(PlayerType.PLAYER) > CalculateHandValue(PlayerType.DEALER);
+            return CalculateHandValue(PlayerType.PLAYER, handIndex) > CalculateHandValue(PlayerType.DEALER, 0);
         }
 
-        public Boolean CheckBust(PlayerType playerType)
+        public Boolean CheckBust(PlayerType playerType, int handIndex)
         {
-            return CalculateHandValue(playerType) > 21;
+            return CalculateHandValue(playerType, handIndex) > 21;
+        }
+
+        public Boolean CheckBlackjack(PlayerType playerType, int handIndex)
+        {
+            return CalculateHandValue(playerType, handIndex) == 21;
         }
 
         public void BeginDealerDraw()
         {
             RevealDealerHand();
-            while (CalculateHandValue(PlayerType.DEALER) < 17)
+            while (CalculateHandValue(PlayerType.DEALER, 0) < 17)
             {
-                AddCardToHand(PlayerType.DEALER, true);
+                AddCardToHand(PlayerType.DEALER, true, false, 0);
             }
         }
 

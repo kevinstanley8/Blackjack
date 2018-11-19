@@ -27,6 +27,11 @@ namespace Blackjack.dto
         {
             this.cards = new List<Card>();
 
+            this.cards.Add(new Card(Value.ACE, Suit.SPADE));
+            this.cards.Add(new Card(Value.KING, Suit.SPADE));
+            this.cards.Add(new Card(Value.TWO, Suit.HEART));
+            this.cards.Add(new Card(Value.KING, Suit.HEART));
+
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
                 foreach (Value value in Enum.GetValues(typeof(Value)))
