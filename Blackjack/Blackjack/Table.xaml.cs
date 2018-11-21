@@ -124,8 +124,13 @@ namespace Blackjack
 
         private void PlayerDoubleDown()
         {
+            if (currentBet * 2 > gameService.bank.amount)
+            {
+                MessageBox.Show("You don't have enough money!");
+                return;
+            }
             SetPlayBtnsEnabled(false);
-            this.SetBet(this.currentBet * 2);
+            this.SetBet(currentBet * 2);
             this.PlayerHit();
 
             //if player didn't already lose
@@ -157,9 +162,13 @@ namespace Blackjack
 
         private void btnNewHand_Click(object sender, RoutedEventArgs e)
         {
-            // Temporary Logic
             this.mediaWin.Stop();
             this.mediaLose.Stop();
+            if (currentBet > gameService.bank.amount)
+            {
+                MessageBox.Show("You don't have enough money!");
+                return;
+            }
             SetPlayBtnsEnabled(true);
             this.SetBetBtnsEnabled(false);
             btnNewHand.IsEnabled = false;
@@ -202,7 +211,8 @@ namespace Blackjack
         private void btnBetPlus_Click(object sender, RoutedEventArgs e)
         {
             currentBet = (Double)Decimal.Parse((string)lblBetAmount.Content, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
-            if (currentBet >= 50) return;
+            if (currentBet >= gameService.bank.amount || currentBet >= 50)
+                return;
             else currentBet += 1;
             lblBetAmount.Content = String.Format("${0:n0}", currentBet);
         }
