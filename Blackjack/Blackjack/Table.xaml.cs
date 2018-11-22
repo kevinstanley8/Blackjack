@@ -24,14 +24,19 @@ namespace Blackjack
     {
         private GameService gameService { get; set; }
         private Double currentBet { get; set; }
+        private Double originalBet { get; set; }
         private Boolean audioEnabled { get; set; }
         private Boolean isSplit { get; set; }
         private int currentHand { get; set; }
+        public Boolean processedHandOne = false;
+        public Boolean processedHandTwo = false;
+        Boolean[] processedHand = { false, false };
 
         public Table()
         {
             InitializeComponent();
             currentBet = 1;
+            originalBet = 1;
             UpdateBetText();
             this.audioEnabled = true;
             this.isSplit = false;
@@ -78,10 +83,12 @@ namespace Blackjack
                 gameService.BeginDealerDraw();
 
                 //check 1st hand
-                this.stayHand(0);
+                if(!this.processedHand[0])
+                    this.stayHand(0);
 
                 //check second hand
-                this.stayHand(1);
+                if (!this.processedHand[1])
+                    this.stayHand(1);
             }
             else
             {
@@ -93,33 +100,37 @@ namespace Blackjack
 
         private void stayHand(int handIndex)
         {
-            if (gameService.CheckDraw(this.currentHand))
-                DisplayDrawDialog();
+            if (gameService.CheckDraw(handIndex))
+                DisplayDrawDialog(handIndex);
             else if (gameService.CheckBust(GameService.PlayerType.DEALER, handIndex) || gameService.CheckWin(handIndex))
-                this.winHand(HandResult.WIN);
+                this.winHand(HandResult.WIN, handIndex);
             else
-                this.loseHand();
+                this.loseHand(handIndex);
         }
 
-        private void winHand(HandResult handResult)
+        private void winHand(HandResult handResult, int handIndex)
         {
+            this.processedHand[handIndex] = true;
             this.gameService.ProcessHandResult(handResult, this.currentBet);
             this.RefreshBankAmountOnScreen();
-            DisplayWinDialog();
+            DisplayWinDialog(handIndex);
         }
 
-        private void loseHand()
+        private void loseHand(int handIndex)
         {
+            this.processedHand[handIndex] = true;
             this.gameService.ProcessHandResult(HandResult.LOSE, this.currentBet);
             this.RefreshBankAmountOnScreen();
-            DisplayLoseDialog();
+            DisplayLoseDialog(handIndex);
         }
 
-        private void PlayerHit()
+        private void PlayerHit(int handIndex)
         {
             this.gameService.AddCardToHand(GameService.PlayerType.PLAYER, true, this.isSplit, this.currentHand);
             if (gameService.CheckBust(GameService.PlayerType.PLAYER, this.currentHand))
-                this.loseHand();
+                this.loseHand(handIndex);
+            if(this.isSplit)
+                this.CheckBlackjack(handIndex);
         }
 
         private void PlayerDoubleDown()
@@ -129,18 +140,29 @@ namespace Blackjack
                 MessageBox.Show("You don't have enough money!");
                 return;
             }
+
+            if (this.isSplit)
+            {
+                MessageBox.Show("You can't Double Down on a Split hand!");
+                return;
+            }
+
             SetPlayBtnsEnabled(false);
+            this.originalBet = this.currentBet;
             this.SetBet(currentBet * 2);
-            this.PlayerHit();
+            this.PlayerHit(this.currentHand);
 
             //if player didn't already lose
             if(!btnNewHand.IsEnabled)
                 this.PlayerStay();
+
+            //reset original bid so it doesn't keep doubling
+            this.SetBet(this.originalBet);
         }
 
         private void btnHit_Click(object sender, RoutedEventArgs e)
         {
-            this.PlayerHit();
+            this.PlayerHit(this.currentHand);
         }
 
         private void btnStay_Click(object sender, RoutedEventArgs e)
@@ -151,8 +173,13 @@ namespace Blackjack
 
         private void btnSplit_Click(object sender, RoutedEventArgs e)
         {
-            this.isSplit = true;
-            this.gameService.SplitHand();
+            if (this.gameService.canSplit())
+            {
+                this.isSplit = true;
+                this.gameService.SplitHand();
+            }
+            else
+                MessageBox.Show("You can't Split on this hand!  Card must be the same to Split!");
         }
 
         private void btnDoubleDown_Click(object sender, RoutedEventArgs e)
@@ -174,29 +201,31 @@ namespace Blackjack
             btnNewHand.IsEnabled = false;
             this.isSplit = false;
             this.currentHand = 0;
+            this.processedHand[0] = false;
+            this.processedHand[1] = false;
             gameService.StartGame(gridInnerCenter);
-            this.CheckBlackjack();
+            this.CheckBlackjack(this.currentHand);
         }
 
         /**
          * CheckBlackjack - Check to see if player has Blackjack.  If both dealer and player have Blackjack then it is a draw.
          */
-        private void CheckBlackjack()
+        private void CheckBlackjack(int handIndex)
         {
-            if (gameService.CheckBlackjack(GameService.PlayerType.PLAYER, this.currentHand) && gameService.CheckBlackjack(GameService.PlayerType.DEALER, this.currentHand))
+            if (gameService.CheckBlackjack(GameService.PlayerType.PLAYER, handIndex) && gameService.CheckBlackjack(GameService.PlayerType.DEALER, handIndex))
             {
                 this.gameService.RevealDealerHand();
-                this.DisplayDrawDialog();
+                this.DisplayDrawDialog(handIndex);
             }
-            else if (gameService.CheckBlackjack(GameService.PlayerType.PLAYER, this.currentHand))
+            else if (gameService.CheckBlackjack(GameService.PlayerType.PLAYER, handIndex))
             {
                 this.gameService.RevealDealerHand();
-                this.winHand(HandResult.BLACKJACK);
+                this.winHand(HandResult.BLACKJACK, handIndex);
             }
-            else if (gameService.CheckBlackjack(GameService.PlayerType.DEALER, this.currentHand))
+            else if (gameService.CheckBlackjack(GameService.PlayerType.DEALER, handIndex))
             {
                 this.gameService.RevealDealerHand();
-                this.loseHand();
+                this.loseHand(handIndex);
             }
         }
 
@@ -225,10 +254,13 @@ namespace Blackjack
             lblBetAmount.Content = String.Format("${0:n0}", currentBet);
         }
 
-        public void DisplayLoseDialog()
+        public void DisplayLoseDialog(int handIndex)
         {
             this.PlayLoseAudio();
-            MessageBox.Show("You Lose!");
+            if(this.isSplit)
+                MessageBox.Show("You Lose hand " + (handIndex + 1) + "!");
+            else
+                MessageBox.Show("You Lose!");
 
             if (!this.isSplit || this.currentHand >= 1)
             {
@@ -239,10 +271,13 @@ namespace Blackjack
                 this.currentHand++;
         }
 
-        public void DisplayWinDialog()
+        public void DisplayWinDialog(int handIndex)
         {
             this.PlayWinAudio();
-            MessageBox.Show("You Win!");
+            if (this.isSplit)
+                MessageBox.Show("You Win hand " + (handIndex + 1) + "!");
+            else
+                MessageBox.Show("You Win!");
 
             if (!this.isSplit || this.currentHand >= 1)
             {
@@ -253,9 +288,12 @@ namespace Blackjack
                 this.currentHand++;
         }
 
-        public void DisplayDrawDialog()
+        public void DisplayDrawDialog(int handIndex)
         {
-            MessageBox.Show("Draw!");
+            if (this.isSplit)
+                MessageBox.Show("Draw hand " + (handIndex + 1) + "!");
+            else
+                MessageBox.Show("Draw!");
 
             if (!this.isSplit || this.currentHand >= 1)
             {

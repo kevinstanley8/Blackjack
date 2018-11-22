@@ -103,6 +103,14 @@ namespace Blackjack.service
             table.Children.Add(card.cardImage);
         }
 
+        public Boolean canSplit()
+        {
+            if (((Card)this.player.hand[0][0]).GetStringValue().Equals(((Card)this.player.hand[0][1]).GetStringValue()))
+                return true;
+            else
+                return false;
+        }
+
         public void SplitHand()
         {
             //move cards to seperate hands on table
