@@ -35,6 +35,8 @@
                         Width="140" Height="50" Click="btnSplit_Click" Margin="0 17 0 0" />
                 <Button x:Name="btnDoubleDown" Content="Double Down" Style="{StaticResource RoundedButton1}" FontSize="20" FontWeight="Bold"
                         Width="140" Height="50" Click="btnDoubleDown_Click" Margin="0 17 0 0" />
+                <Button x:Name="btnAddMoney" Content="Add Money" Style="{StaticResource RoundedButton1}" FontSize="20" FontWeight="Bold"
+                    Width="140" Height="50" Click="btnAddMoney_Click" Margin="69,17,69,0" />
             </StackPanel>
             <Image x:Name="imgAudio" HorizontalAlignment="Left" Height="62" Margin="156,23,0,0" Grid.Row="2" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.164,-0.378" Source="Images/audio_on.png" MouseUp="imgAudioOn_MouseUp"/>
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack.dto.types
 {
-    class Bank
+    public class Bank
     {
         public double amount { get; set; }
 

@@ -207,6 +207,13 @@ namespace Blackjack
             this.CheckBlackjack(this.currentHand);
         }
 
+        private void btnAddMoney_Click(object sender, RoutedEventArgs e)
+        {
+            AddMoney addMoney = new AddMoney(this.gameService);
+            addMoney.Owner = this;
+            addMoney.Show();
+        }
+
         /**
          * CheckBlackjack - Check to see if player has Blackjack.  If both dealer and player have Blackjack then it is a draw.
          */

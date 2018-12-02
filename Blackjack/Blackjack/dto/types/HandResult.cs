@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack.dto.types
 {
-    enum HandResult
+    public enum HandResult
     {
         WIN,
         LOSE,

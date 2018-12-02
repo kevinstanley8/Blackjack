@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace Blackjack.dto
 {
-    class Card
+    public class Card
     {
         public Value value { get; set; }
         public Suit suit { get; set; }

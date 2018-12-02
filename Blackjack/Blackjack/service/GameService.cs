@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace Blackjack.service
 {
-    class GameService
+    public class GameService
     {
         public Deck deck { get; set; }
         public enum PlayerType { PLAYER, DEALER };

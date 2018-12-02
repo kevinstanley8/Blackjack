@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack.dto
 {
-    class Deck
+    public class Deck
     {
         public List<Card> cards { get; set; }
         private int deckIndex { get; set; }

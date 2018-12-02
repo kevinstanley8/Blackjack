@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack.dto.types
 {
-    enum Suit
+    public enum Suit
     {
         HEART,
         DIAMOND,

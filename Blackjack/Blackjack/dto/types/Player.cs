@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack.dto.types
 {
-    class Player
+    public class Player
     {
         public List<List<Card>> hand { get; set; }
 
