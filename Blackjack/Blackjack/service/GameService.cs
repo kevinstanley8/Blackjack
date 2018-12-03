@@ -58,6 +58,17 @@ namespace Blackjack.service
             nextCard.faceUp = isFaceUp;
             nextCard.SetCardImage();
 
+            foreach (Image img in table.Children)
+            {
+                if (table.Children.IndexOf(nextCard.cardImage) > -1)
+                {
+                    nextCard = this.deck.GetNextCard();
+                    nextCard = this.deck.GetNextCard();
+                    nextCard.faceUp = isFaceUp;
+                    nextCard.SetCardImage();
+                }
+            }
+
             if (playerType == PlayerType.PLAYER)
             {
                 this.player.hand[handIndex].Add(nextCard);

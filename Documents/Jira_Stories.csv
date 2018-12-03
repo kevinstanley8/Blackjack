@@ -1,0 +1,72 @@
+Summary,Issue key,Issue id,Issue Type,Status,Project key,Project name,Project type,Project lead,Project description,Project url,Priority,Resolution,Assignee,Reporter,Creator,Created,Updated,Last Viewed,Resolved,Due date,Votes,Description,Environment,Watchers,Original Estimate,Remaining Estimate,Time Spent,Work Ratio,Σ Original Estimate,Σ Remaining Estimate,Σ Time Spent,Security Level,Custom field (Change completion date),Custom field (Change reason),Custom field (Change risk),Custom field (Change start date),Custom field (Change type),Custom field (Development),Custom field (Epic Color),Custom field (Epic Link),Custom field (Epic Name),Custom field (Epic Status),Custom field (Impact),Custom field (Issue color),Custom field (Rank),Custom field (Request Type),Custom field (Request participants),Custom field (Start date),Custom field (Story Points),Custom field (Story point estimate),Custom field ([CHART] Date of First Response)
+Turn In Final Project,BJACK-22,10021,Story,Backlog,BJACK,Blackjack,software,admin,,,Medium,,admin,admin,admin,21/Nov/18 7:27 PM,21/Nov/18 7:27 PM,02/Dec/18 5:27 PM,,,0,Per the requirements only 1 person needs to turn in the Final Project.  The file needs to be called *Assignment3_Final_CSC_460_660_TEAM_NAME*,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0004n:,,,,,,
+Final Presentation,BJACK-21,10020,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,21/Nov/18 7:26 PM,02/Dec/18 5:27 PM,02/Dec/18 4:57 PM,02/Dec/18 5:27 PM,,0,"Per the requirements we need to give a final presentation about our application.  The presentation needs to include the following:
+
+* Background of the project.
+* Each team member's role.
+* Software development processes.
+* Any Prototypes vs. final product.
+* Walk through Workflow diagram.
+* Walk through Architecture diagram.
+* Demonstration of final product.
+* Professionalism will be evaluated.
+* Presentation should be no less than 10 minutes and no longer than 15 minutes.
+* Use PowerPoints, Slides, or anything else needed to demonstrate work put into project.
+* This means you’ll need some way to present to the class (have this setup before presentation day, to know it works).
+* Every person on the team must speak and be part of the presentation.
+",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0004f:,,,,,,
+Workflow Diagram,BJACK-20,10019,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,21/Nov/18 7:25 PM,02/Dec/18 3:55 PM,02/Dec/18 3:56 PM,02/Dec/18 3:55 PM,,0,Per the requirements we need to name our workflow diagram file *Assignment3_Workflow_Diagram*,,admin,,,,,,,,,,,,,,{},,,,,,,0|i00047:,,,,,,
+How To Guide,BJACK-18,10017,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,21/Nov/18 7:21 PM,02/Dec/18 4:57 PM,02/Dec/18 4:02 PM,02/Dec/18 4:57 PM,,0,"Per the requirements we need to create a ""How To guide that walks them through how to use the software""
+
+Name the file *Assignment3_How_To_Document*
+
+
+
+Also need to include the following:
+
+Per the requirements we need to create documentation with the following information:
+
+* Screenshots of application in action
+* Any Testing strategies
+* Github repository links
+* Each team member's role on the application.
+",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0003r:,,,,,,
+Borrow Money,BJACK-17,10016,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,21/Nov/18 7:19 PM,02/Dec/18 3:53 PM,02/Dec/18 3:53 PM,02/Dec/18 3:53 PM,,0,"Requirement state: Players may borrow funds if they run out
+
+We need to make it where the players can ""borrow"" money if they run out or have the ability to add more money to their bank.",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0003j:,,,,,,
+Card Image Error,BJACK-16,10015,Bug,Backlog,BJACK,Blackjack,software,admin,,,Medium,,,admin,admin,21/Nov/18 7:18 PM,21/Nov/18 7:18 PM,26/Nov/18 5:47 PM,,,0,"Found an interesting issue while testing the app.  I got an error saying ""Specified Visual is already a child of another Visual or the root of a CompositionTarget"".  What happened the 10D was dealt to me as a player.  The number of cards left in the deck hit the shuffle threshold so the deck was shuffled.  Then the 10D was dealt to me again which caused the error.  I don't think it will happen much but wanted to record it in case we have time to fix it.",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0003b:,,,,,,
+Initial Game ,BJACK-15,10014,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,,admin,admin,10/Nov/18 1:55 PM,10/Nov/18 4:25 PM,26/Nov/18 5:43 PM,10/Nov/18 4:25 PM,,0,"Get initial game working.  Add button (will be replaced later by real button) to allow players to start game, hit, stay.",,admin,,,,,,,,,,,,,,{},,,,,,,0|i00033:,,,,,,
+Hit/Stay/Split/Double Down Buttons,BJACK-14,10013,Story,Backlog,BJACK,Blackjack,software,admin,,,Medium,,zafondal,admin,admin,05/Nov/18 6:43 PM,05/Nov/18 6:46 PM,18/Nov/18 2:07 PM,,,0,Hit/Stay/Split/Double Down Buttons,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0002v:,,,,,,
+Create Bank Object,BJACK-13,10012,Story,Backlog,BJACK,Blackjack,software,admin,,,Medium,,zafondal,admin,admin,05/Nov/18 6:35 PM,05/Nov/18 6:42 PM,05/Nov/18 6:42 PM,,,0,"Create Bank class that will represent the Blackjack bank.  It should have functions to do the following:
+
+* Display balance
+* Add money
+* Subtract money",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0002n:,,,,,,
+Create Deck Object,BJACK-12,10011,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,05/Nov/18 6:32 PM,06/Nov/18 8:11 PM,06/Nov/18 7:35 PM,06/Nov/18 8:11 PM,,0,Create Deck object representing a deck of card in our application.  This should be a class containing a List of Card objects.  Later we can add shuffling and any other operations to this class.,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0002f:,,,,,,
+Create Card Object,BJACK-11,10010,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,05/Nov/18 6:31 PM,06/Nov/18 8:11 PM,06/Nov/18 7:35 PM,06/Nov/18 8:11 PM,,0,"Create a Card object that will be used to represent an individual card in the application.  It should have the following fields:
+
+* Number 
+* Suit
+* Image link
+
+I'd also like to see an Enum of all the different number and suit options so we can dynamically create a deck at runtime.",,admin,,,,,,,,,,,,,,{},,,,,,,0|i00027:,,,,,,
+Add Zach to GitHub,BJACK-10,10009,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,05/Nov/18 6:29 PM,06/Nov/18 8:11 PM,06/Nov/18 8:11 PM,06/Nov/18 8:11 PM,,0,,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0001z:,,,,,,
+Zach GitHub,BJACK-9,10008,Story,Backlog,BJACK,Blackjack,software,admin,,,Medium,,zafondal,admin,admin,05/Nov/18 6:29 PM,05/Nov/18 6:36 PM,05/Nov/18 6:36 PM,,,0,Zach create a GitHub account and send me your username so I can add you to the project.,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0001r:,,,,,,
+Architecture Diagram,BJACK-8,10007,Story,Backlog,BJACK,Blackjack,software,admin,,,Medium,,zafondal,admin,admin,05/Nov/18 6:26 PM,26/Nov/18 5:44 PM,26/Nov/18 5:47 PM,,,0,"Start Architecture Diagram of system. We will have to turn this in at some point so we need to get started/keep it in mind while programming the application.
+
+Need to name file *Assignment3_Architecture_Diagram*",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0001j:,,,,,,
+Audio??,BJACK-7,10006,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,05/Nov/18 6:15 PM,21/Nov/18 7:21 PM,21/Nov/18 7:21 PM,21/Nov/18 7:21 PM,,0,Instructions said audio in our application is a plus.  Do we want to you any kind of audio for our application?,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0001b:,,,,,,
+Deck Shuffle,BJACK-6,10005,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,carsonmullins,admin,admin,05/Nov/18 6:14 PM,10/Nov/18 5:30 PM,10/Nov/18 1:54 PM,10/Nov/18 5:30 PM,,0,Need to write a function that will shuffle card deck and ensure it is randomized.,,admin,,,,,,,,,,,,,,{},,,,,,,0|i00013:,,,,,,
+Storage,BJACK-5,10004,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,05/Nov/18 6:12 PM,21/Nov/18 7:22 PM,21/Nov/18 7:21 PM,21/Nov/18 7:22 PM,,0,Need to figure out what we will use for the data storage for the application.  LSUS network won't let us access a remote database.  I think a local DB is overkill.  Maybe storing a file in JSON format will work for us.  Could be easy to read and write.,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0000v:,,,,,,
+Card images,BJACK-4,10003,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,carsonmullins,admin,admin,05/Nov/18 6:06 PM,10/Nov/18 5:30 PM,05/Nov/18 6:44 PM,10/Nov/18 5:30 PM,,0,"Need to find images we can use for the following:
+
+* Deck of cards
+* All individual cards A, K, Q, J, 1 - 10 for all suits Hearts, Spades, Clubs, Diamonds
+* Poker chips for different betting amounts????",,admin,,,,,,,,,,,,,,{},,,,,,,0|i0000n:,,,,,,
+Add Prototype to GIT repo,BJACK-3,10002,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,,admin,admin,05/Nov/18 6:01 PM,18/Nov/18 5:20 AM,10/Nov/18 1:54 PM,18/Nov/18 5:20 AM,,0,Need to add prototype already created to our GIT repo so we can keep everything all in one place.,,admin,,,,,,,,,,,,,,{},,,,,,,0|i0000f:,,,,,,
+Create Initial GIT Commit,BJACK-2,10001,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,05/Nov/18 6:00 PM,06/Nov/18 8:11 PM,06/Nov/18 8:11 PM,06/Nov/18 8:11 PM,,0,Create initial Blackjack application.  ,,admin,,,,,,,,,,,,,,{},,,,,,,0|i00007:,,,,,,
+Setup Slack,BJACK-1,10000,Story,Done,BJACK,Blackjack,software,admin,,,Medium,Done,admin,admin,admin,29/Oct/18 7:59 PM,30/Oct/18 1:46 AM,29/Oct/18 8:05 PM,30/Oct/18 1:46 AM,,0,"Setup team Slack channel - team emails:
+
+Carson - carsonmullins@yahoo.com
+Zach - zafondal@gmail.com
+Kevin - kevin.patrick.stanley@gmail.com",,admin,,,,,,,,,,,,,,{},,,,,,,0|hzzzzz:,,,,,,

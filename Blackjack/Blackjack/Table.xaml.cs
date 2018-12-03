@@ -118,6 +118,7 @@ namespace Blackjack
 
         private void loseHand(int handIndex)
         {
+            this.gameService.RevealDealerHand();
             this.processedHand[handIndex] = true;
             this.gameService.ProcessHandResult(HandResult.LOSE, this.currentBet);
             this.RefreshBankAmountOnScreen();
